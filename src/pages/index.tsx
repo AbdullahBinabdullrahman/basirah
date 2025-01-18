@@ -13,10 +13,25 @@ import {
 } from "../assets";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
 
 // Copy the entire Home component from landing.tsx
 export default function Home() {
   const [isMobile, setIsMobile] = useState(true);
+  const partners = [
+    { name: "خدمات الشرق الاوسط", logo: mesiotIcon },
+    { name: "HUBUP", logo: hubspotIcon },
+    { name: "تمت للمزادات", logo: tamtIcon },
+    { name: "اوتاد العقارية", logo: awtadIcon },
+    { name: "اساس الثبات", logo: asasIcon },
+    { name: "ديار العقارية", logo: diarIcon },
+    { name: "مدرب", logo: mudptIcon },
+  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -585,46 +600,127 @@ export default function Home() {
       </section>
 
       {/* Partners Section - Sleek Grid Layout with Larger Icons */}
-      <section id="partners" className="py-8 md:py-16 px-4 bg-gray-800/50">
+      <section
+        id="partners"
+        className="py-12 md:py-16 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-6xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">
+          {/* Section Title */}
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">
             عملاؤنا
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {[
-              { name: "خدمات الشرق الاوسط", logo: mesiotIcon },
-              { name: "HUBUP", logo: hubspotIcon },
-              { name: "تمت للمزادات", logo: tamtIcon },
-              { name: "اوتاد العقارية", logo: awtadIcon },
-              { name: "اساس الثبات", logo: asasIcon },
-              { name: "ديار العقارية", logo: diarIcon },
-              { name: "مدرب", logo: mudptIcon },
-            ].map((partner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 10px 30px -15px rgba(52, 211, 153, 0.3)",
-                }}
-                className="bg-white p-12 md:p-16 rounded-xl shadow-lg flex items-center justify-center transition-shadow duration-300 min-h-[200px]"
-              >
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="h-20 md:h-24 w-auto object-contain"
-                />
-              </motion.div>
+          {/* Swiper Carousel */}
+          <Swiper
+            modules={[Autoplay, Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={isMobile ? 1 : 4}
+            onSwiper={(swiper) => {
+              // Add mouseenter and mouseleave event listeners
+              swiper.el.addEventListener("mouseenter", () =>
+                swiper.autoplay.stop()
+              );
+              swiper.el.addEventListener("mouseleave", () =>
+                swiper.autoplay.start()
+              );
+            }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            // pagination={{
+            //   clickable: true,
+            //   bulletActiveClass:
+            //     "swiper-pagination-bullet-active bg-emerald-400",
+            // }}
+            // navigation
+            loop={true}
+            className="pb-12 px-4"
+          >
+            {partners.map((partner, index) => (
+              <SwiperSlide key={index}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{
+                    scale: 1.02,
+                    rotateX: 5,
+                    rotateY: -5,
+                  }}
+                  className="relative bg-gradient-to-br from-gray-800/30 via-gray-900/30 to-gray-800/30 
+                    backdrop-blur-md border border-emerald-400/10 hover:border-emerald-400/30
+                    p-8 md:p-10 rounded-3xl shadow-xl flex items-center justify-center 
+                    transition-all duration-300 min-h-[200px] md:min-h-[220px]
+                    group overflow-hidden isolate"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                  }}
+                >
+                  {/* Ambient Light Effect */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-transparent to-transparent 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"
+                  />
+
+                  {/* Shimmer Effect */}
+                  <div
+                    className="absolute -inset-[500px] group-hover:animate-[spin_8s_linear_infinite] bg-gradient-to-r 
+                    from-transparent via-emerald-400/5 to-transparent rotate-45 -z-10"
+                  />
+
+                  {/* Glass Reflection */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10"
+                  />
+
+                  {/* Partner Logo with 3D Effect */}
+                  <motion.div
+                    whileHover={{ rotateY: 10, z: 20 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    style={{ transformStyle: "preserve-3d" }}
+                    className="relative"
+                  >
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="h-16 md:h-20 w-auto object-contain transition-all duration-300 
+                        group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]"
+                    />
+                  </motion.div>
+
+                  {/* Partner Name with Floating Effect */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-900/95 via-gray-900/70 to-transparent 
+                      backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 
+                      transition-transform duration-500 ease-out"
+                  >
+                    <p
+                      className="text-center text-sm font-medium bg-gradient-to-r from-emerald-400 to-emerald-300 
+                      bg-clip-text text-transparent"
+                    >
+                      {partner.name}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              </SwiperSlide>
             ))}
+          </Swiper>
+
+          {/* Subtitle */}
+          <div className="text-center mt-8">
+            <p className="text-gray-400 text-lg">
+              نحن فخورون بالثقة التي منحنا إياها شركاؤنا من مختلف القطاعات.
+            </p>
           </div>
         </motion.div>
       </section>
