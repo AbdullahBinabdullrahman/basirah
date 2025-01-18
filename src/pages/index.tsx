@@ -12,9 +12,23 @@ import {
   mudptIcon,
 } from "../assets";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // Copy the entire Home component from landing.tsx
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800"
@@ -31,8 +45,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
           <motion.h1
             className="text-2xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: isMobile ? 1 : 1.05 }}
+            whileTap={{ scale: isMobile ? 0.95 : 1 }}
           >
             بصيرة التحليل
           </motion.h1>
@@ -51,11 +65,11 @@ export default function Home() {
                     : "contact"
                 }`}
                 className="relative px-4 py-2 font-medium text-gray-100"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: isMobile ? 1 : 1.1 }}
+                whileTap={{ scale: isMobile ? 0.95 : 1 }}
               >
                 <motion.span
-                  className="absolute inset-0 bg-emerald-400/10 rounded-lg -z-10"
+                  className="absolute inset-0 bg-emerald-400/10 rounded-lg -z-10 hidden md:block"
                   layoutId="navbar-hover"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
@@ -69,7 +83,7 @@ export default function Home() {
       </motion.header>
 
       {/* Enhanced Hero Section with More 3D Elements */}
-      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0">
+      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2">
         <motion.div className="absolute inset-0 z-0">
           {/* 3D Grid Background */}
           <motion.div
@@ -98,14 +112,20 @@ export default function Home() {
               >
                 <motion.span
                   className="block text-5xl md:text-7xl font-extrabold text-emerald-400"
-                  whileHover={{ scale: 1.05, x: 10 }}
+                  whileHover={{
+                    scale: isMobile ? 1 : 1.05,
+                    x: isMobile ? 10 : 0,
+                  }}
                   transition={{ type: "spring" }}
                 >
                   تحويل
                 </motion.span>
                 <motion.span
                   className="block bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent font-extrabold"
-                  whileHover={{ scale: 1.05, x: 10 }}
+                  whileHover={{
+                    scale: isMobile ? 1 : 1.05,
+                    x: isMobile ? 10 : 0,
+                  }}
                   transition={{ type: "spring" }}
                 >
                   المستقبل الرقمي
@@ -287,6 +307,153 @@ export default function Home() {
           </div>
         </motion.div>
       </div>
+
+      {/* Services & Expertise Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-4xl font-bold text-center mb-16"
+          >
+            خدماتنا واختصاصاتنا
+          </motion.h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "استشارات تقنية",
+                description:
+                  "نقدم استشارات متخصصة في التحول الرقمي وتطوير استراتيجيات تقنية المعلومات للشركات",
+                icon: "💡",
+                features: [
+                  "تحليل احتياجات العمل",
+                  "استراتيجيات التحول الرقمي",
+                  "حلول تقنية مخصصة",
+                ],
+              },
+              {
+                title: "تطوير البرمجيات",
+                description:
+                  "نطور حلول برمجية متكاملة باستخدام أحدث التقنيات لتلبية احتياجات عملائنا",
+                icon: "⚡",
+                features: [
+                  "تطبيقات الويب",
+                  "تطبيقات الموبايل",
+                  "أنظمة إدارة المؤسسات",
+                ],
+              },
+              //   {
+              //     title: "الذكاء الاصطناعي",
+              //     description:
+              //       "نوظف تقنيات الذكاء الاصطناعي لتحسين العمليات وتقديم حلول مبتكرة",
+              //     icon: "🤖",
+              //     features: [
+              //       "معالجة اللغات الطبيعية",
+              //       "التعلم الآلي",
+              //       "تحليل البيانات المتقدم",
+              //     ],
+              //   },
+              {
+                title: "حلول السحابة",
+                description:
+                  "نقدم خدمات سحابية متكاملة لتحسين أداء وكفاءة أعمال عملائنا",
+                icon: "☁️",
+                features: [
+                  "هندسة السحابة",
+                  "إدارة البنية التحتية",
+                  "أمن المعلومات",
+                ],
+              },
+              {
+                title: "إنترنت الأشياء",
+                description:
+                  "نطور حلول متكاملة لإنترنت الأشياء للمباني الذكية والمدن الذكية",
+                icon: "🌐",
+                features: [
+                  "أنظمة المباني الذكية",
+                  "أجهزة الاستشعار",
+                  "التحكم الذكي",
+                ],
+              },
+              {
+                title: "تحليل البيانات",
+                description:
+                  "نحول البيانات إلى رؤى قيمة تساعد في اتخاذ القرارات الاستراتيجية",
+                icon: "📊",
+                features: ["تحليلات تنبؤية", "لوحات المعلومات", "تقارير ذكية"],
+              },
+            ].map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+                className="bg-gray-800/50 p-6 rounded-xl border border-emerald-400/20 hover:border-emerald-400/40 transition-all"
+              >
+                <div className="text-4xl mb-4">{service.icon}</div>
+                <h3 className="text-xl font-bold text-emerald-400 mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-gray-300 mb-4">{service.description}</p>
+                <ul className="space-y-2">
+                  {service.features.map((feature, i) => (
+                    <li key={i} className="flex items-center text-gray-400">
+                      <span className="text-emerald-400 ml-2">•</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Expertise Stats */}
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="text-4xl md:text-5xl font-bold text-emerald-400 mb-2"
+              >
+                10+
+              </motion.div>
+              <div className="text-gray-300">سنوات خبرة</div>
+            </motion.div>
+
+            {/* Founding Partners */}
+            {[
+              {
+                name: "عبدالله بن عبدالرحمن",
+                title: "شريك مؤسس",
+                desc: "مهندس برمجيات متميز مع خبرة واسعة في تطوير الحلول التقنية المبتكرة وإنترنت الأشياء وقيادة فرق التطوير. متخصص في تطوير البرمجيات المتقدمة وأنظمة إنترنت الأشياء",
+              },
+              {
+                name: "راكان القريني",
+                title: "شريك مؤسس",
+                desc: "مهندس برمجيات متميز مع خبرة عميقة في تصميم وتطوير البنية التحتية السحابية والأنظمة المتقدمة. متخصص في البنية التحتية السحابية وتطوير البرمجيات",
+              },
+            ].map((founder, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="text-center bg-gray-800/50 p-6 rounded-xl border border-emerald-400/20"
+              >
+                <h3 className="text-xl font-bold text-emerald-400 mb-2">
+                  {founder.name}
+                </h3>
+                <div className="text-gray-300 mb-3">{founder.title}</div>
+                <p className="text-gray-400 text-sm">{founder.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Products Section with Larger Cards */}
       <section id="products" className="py-8 md:py-16 px-4">
@@ -492,8 +659,8 @@ export default function Home() {
             <h4 className="font-bold mb-4">تواصل معنا</h4>
             <div className="space-y-2 text-gray-400">
               <p>الرياض، المملكة العربية السعودية</p>
-              <p>هاتف: 966-11-000-0000+</p>
-              <p>البريد الإلكتروني: info@baseerah.com</p>
+              <p style={{ direction: "ltr" }}>+966 566 723 503</p>
+              <p>info@baseerah.com</p>
             </div>
           </div>
 
