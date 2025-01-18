@@ -55,18 +55,18 @@ export default function Home() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="p-4 md:p-6 fixed w-full z-50 backdrop-blur-lg bg-gray-900/50 border-b border-emerald-400/20 shadow-lg shadow-emerald-400/10"
+        className="p-2 md:p-6 fixed w-full z-50 backdrop-blur-lg bg-gray-900/50 border-b border-emerald-400/20 shadow-lg shadow-emerald-400/10"
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
           <motion.h1
-            className="text-2xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent"
+            className="text-xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent"
             whileHover={{ scale: isMobile ? 1 : 1.05 }}
             whileTap={{ scale: isMobile ? 0.95 : 1 }}
           >
             بصيرة التحليل
           </motion.h1>
 
-          <nav className="flex space-x-reverse space-x-4 md:space-x-8 text-sm md:text-base">
+          <nav className="flex space-x-reverse space-x-2 md:space-x-8 text-xs md:text-base">
             {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map((item) => (
               <motion.a
                 key={item}
@@ -98,7 +98,7 @@ export default function Home() {
       </motion.header>
 
       {/* Enhanced Hero Section with More 3D Elements */}
-      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2">
+      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2 pt-20 md:pt-0">
         <motion.div className="absolute inset-0 z-0">
           {/* 3D Grid Background */}
           <motion.div
@@ -508,92 +508,74 @@ export default function Home() {
           ].map((product, index) => (
             <motion.div
               key={index}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               whileHover={{
-                rotateX: 5,
-                rotateY: -5,
-                scale: 1.02,
+                scale: isMobile ? 1 : 1.02,
+                rotateX: isMobile ? 0 : 5,
+                rotateY: isMobile ? 0 : -5,
               }}
-              transition={{
-                duration: 0.2,
-                type: "spring",
-                stiffness: 300,
-              }}
-              className="relative group"
-              style={{
-                transformStyle: "preserve-3d",
-                perspective: "1000px",
-              }}
-              onClick={() => (window.location.href = product.link)}
+              className="relative group cursor-pointer"
+              onClick={() => window.open(product.link, "_blank")}
             >
-              <div className="relative p-8 md:p-12 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-transparent transition-all duration-300 cursor-pointer min-h-[600px]">
-                <div className="flex items-center justify-between mb-8">
-                  <h3 className="text-3xl md:text-4xl font-bold text-emerald-400">
+              <div
+                className="relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-emerald-400/10 to-emerald-600/5
+                backdrop-blur-sm border border-emerald-400/20 hover:border-emerald-400/40
+                transition-all duration-300 h-full"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-emerald-400">
                     {product.title}
                   </h3>
                   <motion.div
-                    whileHover={{
-                      rotate: 360,
-                      scale: 1.2,
-                      z: 20,
-                    }}
-                    transition={{ duration: 0.5 }}
-                    style={{ transformStyle: "preserve-3d" }}
-                    className="w-32 h-32 md:w-24 md:h-24 flex items-center justify-center rounded-full bg-emerald-400/10"
+                    whileHover={{ scale: 1.1 }}
+                    className="w-16 h-16 md:w-20 md:h-20 relative"
                   >
                     <Image
                       src={product.icon}
                       alt={product.title}
                       layout="fill"
-                      className=" object-contain p-2"
+                      className="object-contain"
                     />
                   </motion.div>
                 </div>
-                <p className="text-xl md:text-2xl text-gray-300 font-light mb-8">
-                  {product.desc}
-                </p>
-                <ul className="space-y-4 mb-8">
-                  {product.features.map((feature, index) => (
+
+                <p className="text-lg text-gray-300 mb-6">{product.desc}</p>
+
+                <ul className="space-y-3">
+                  {product.features.map((feature, i) => (
                     <li
-                      key={index}
-                      className="flex items-center gap-3 text-lg md:text-xl text-gray-400 font-light"
+                      key={i}
+                      className="flex items-center gap-2 text-gray-400"
                     >
-                      <span className="text-2xl text-emerald-400">•</span>
+                      <span className="text-emerald-400">•</span>
                       {feature}
                     </li>
                   ))}
                 </ul>
-                <motion.a
-                  href={product.link}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-2 px-8 py-4 text-lg bg-emerald-400/10 text-emerald-400 rounded-lg hover:bg-emerald-400/20 transition-colors"
-                >
-                  اعرف المزيد
-                  <svg
+
+                <div className="absolute bottom-6 right-6 text-emerald-400">
+                  <motion.svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 rotate-180"
+                    className="h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                    }}
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M9 5l7 7-7 7"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
-                  </svg>
-                </motion.a>
+                  </motion.svg>
+                </div>
               </div>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-transparent rounded-2xl -z-10 group-hover:opacity-70 transition-opacity"
-                style={{
-                  transform: "translateZ(-40px)",
-                  transformStyle: "preserve-3d",
-                }}
-              />
             </motion.div>
           ))}
         </motion.div>
