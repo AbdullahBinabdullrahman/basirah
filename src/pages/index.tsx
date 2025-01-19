@@ -70,15 +70,14 @@ export default function Home() {
             {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map((item) => (
               <motion.a
                 key={item}
-                href={`#${
-                  item === "عن الشركة"
-                    ? "about"
-                    : item === "المنتجات"
+                href={`#${item === "عن الشركة"
+                  ? "about"
+                  : item === "المنتجات"
                     ? "products"
                     : item === "شركاؤنا"
-                    ? "partners"
-                    : "contact"
-                }`}
+                      ? "partners"
+                      : "contact"
+                  }`}
                 className="relative px-4 py-2 font-medium text-gray-100"
                 whileHover={{ scale: isMobile ? 1 : 1.1 }}
                 whileTap={{ scale: isMobile ? 0.95 : 1 }}
@@ -136,7 +135,7 @@ export default function Home() {
                   تحويل
                 </motion.span>
                 <motion.span
-                  className="block bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent font-extrabold"
+                  className="block bg-gradient-to-r h-20 from-emerald-400 to-emerald-300 bg-clip-text text-transparent font-extrabold"
                   whileHover={{
                     scale: isMobile ? 1 : 1.05,
                     x: isMobile ? 10 : 0,
@@ -300,9 +299,8 @@ export default function Home() {
                 {[...Array(3)].map((_, i) => (
                   <motion.path
                     key={i}
-                    d={`M ${100 + i * 50} ${100 + i * 30} Q ${200 + i * 20} ${
-                      150 + i * 20
-                    }, ${300 + i * 30} ${200 + i * 40}`}
+                    d={`M ${100 + i * 50} ${100 + i * 30} Q ${200 + i * 20} ${150 + i * 20
+                      }, ${300 + i * 30} ${200 + i * 40}`}
                     stroke="currentColor"
                     strokeWidth="2"
                     className="text-emerald-400"
@@ -329,7 +327,7 @@ export default function Home() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-3xl md:text-4xl font-bold text-center mb-16 text-emerald-400"
           >
             خدماتنا واختصاصاتنا
           </motion.h2>
@@ -377,7 +375,7 @@ export default function Home() {
                 features: [
                   "هندسة السحابة",
                   "إدارة البنية التحتية",
-                  "أمن المعلومات",
+                  "التكامل مع الأنظمة المختلفة",
                 ],
               },
               {
@@ -435,7 +433,7 @@ export default function Home() {
                 whileHover={{ scale: 1.1 }}
                 className="text-4xl md:text-5xl font-bold text-emerald-400 mb-2"
               >
-                10+
+                15+
               </motion.div>
               <div className="text-gray-300">سنوات خبرة</div>
             </motion.div>
@@ -493,13 +491,13 @@ export default function Home() {
             },
             {
               title: "منصة دبل",
-              desc: "منصة تحليل بيانات متقدمة تساعد الشركات على تحويل البيانات الضخمة إلى رؤى قابلة للتنفيذ باستخدام أدوات ذكاء اصطناعي متطورة.",
+              desc: "صُممت منصتنا لتزويدك بالأدوات الذكية والفعالة التي تساعدك في تحليل الأسواق وفهم الفرص الواعدة. نعتمد على تقنيات الذكاء الاصطناعي وبيوت الخبرة لتحليل القوائم المالية للشركات وإجراء التحليلات الفنية",
               features: [
-                "تحليل البيانات باستخدام خوارزميات ذكاء اصطناعي متقدمة.",
-                "إعداد تقارير مخصصة لتسهيل اتخاذ القرار.",
-                "لوحات عرض تفاعلية تسلط الضوء على أهم المؤشرات.",
-                "إمكانيات التنبؤ بالبيانات لتوقع المستقبل.",
-                "دعم التكامل مع قواعد البيانات والأنظمة المختلفة.",
+                " أدوات لتحليل السوق",
+                "أكثر من مئات الفرصة استثمارية يومياً",
+                " تنبيهات فورية للفرص الاستثمارية",
+                "تحليل الأسهم والعملات",
+                "تحليل القطاعات والأسهم القيادية",
               ],
               gradient: "from-emerald-300 to-emerald-400",
               link: "https://dblplat.co",
@@ -737,8 +735,8 @@ export default function Home() {
             <h4 className="font-bold mb-4">تواصل معنا</h4>
             <div className="space-y-2 text-gray-400">
               <p>الرياض، المملكة العربية السعودية</p>
-              <p style={{ direction: "ltr" }}>+966 566 723 503</p>
-              <p>info@baseerah.com</p>
+              <p style={{ direction: "ltr", float: "right" }}>+966 568 584 311</p>
+              <p>info@bassiratahlil.com</p>
             </div>
           </div>
 
