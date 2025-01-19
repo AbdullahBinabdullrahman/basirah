@@ -1,48 +1,62 @@
-# syntax = docker/dockerfile:1
+# Stage 1: Builder
+FROM node:22-alpine AS builder
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.20.5
-FROM node:${NODE_VERSION}-slim AS base
+# Add required dependencies for sharp and other builds
+RUN apk add --no-cache \
+    libc6-compat \
+    python3 \
+    make \
+    g++ \
+    build-base \
+    vips-dev
 
-LABEL fly_launch_runtime="Next.js"
-
-# Next.js app lives here
+# Set the working directory
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
 
+# Install the latest version of npm
+RUN npm install -g npm@latest
 
-# Throw-away build stage to reduce size of final image
-FROM base AS build
+# Install dependencies (including sharp)
+RUN npm ci
+RUN npm install sharp
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
-
-# Install node modules
-COPY package-lock.json package.json ./
-RUN npm ci --include=dev
-
-# Copy application code
+# Copy the rest of the application code
 COPY . .
 
-# Build application
-RUN npx next build --experimental-build-mode compile
+# Disable telemetry during the build
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Remove development dependencies
-RUN npm prune --omit=dev
+# Build the Next.js application
+RUN npm run build
 
+# Stage 2: Runner
+FROM node:18-alpine AS runner
 
-# Final stage for app image
-FROM base
+# Add sharp dependencies for production
+RUN apk add --no-cache vips-dev
 
-# Copy built application
-COPY --from=build /app /app
+# Set the working directory
+WORKDIR /app
 
-# Entrypoint sets up the container.
-ENTRYPOINT [ "/app/docker-entrypoint.js" ]
+# Set environment variables for production
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Start the server by default, this can be overwritten at runtime
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy only the necessary files from the builder stage
+COPY --from=builder /app ./
+
+# Use the non-root user
+USER nextjs
+
+# Expose the default Next.js port
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+
+# Start the Next.js application
+CMD ["npm", "run", "start"]
