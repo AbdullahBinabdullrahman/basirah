@@ -7,6 +7,16 @@ import awtadIcon from "./awtad-logo.png";
 import asasIcon from "./asas.png";
 import diarIcon from "./diar.png";
 import mudptIcon from "./mudptLogo.svg";
+import jarasIcon from './jaras.svg'
+import seaIcon from './seaIcon.png'
+import tawuniyaIcon from './tawuniya.svg'
+import birmaIcon from './birma.png'
+import sdaiaIcon from './sdaia.svg'
+import umIcon from './um_edu.png'
+
+
+
+
 
 export {
   wslahIcon,
@@ -18,4 +28,10 @@ export {
   asasIcon,
   diarIcon,
   mudptIcon,
+  jarasIcon,
+  seaIcon,
+  tawuniyaIcon,
+  birmaIcon,
+  sdaiaIcon,
+  umIcon
 };

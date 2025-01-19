@@ -10,6 +10,12 @@ import {
   awtadIcon,
   tamtIcon,
   mudptIcon,
+  sdaiaIcon,
+  tawuniyaIcon,
+  jarasIcon,
+  umIcon,
+  seaIcon,
+  birmaIcon
 } from "../assets";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -31,6 +37,15 @@ export default function Home() {
     { name: "اساس الثبات", logo: asasIcon },
     { name: "ديار العقارية", logo: diarIcon },
     { name: "مدرب", logo: mudptIcon },
+  ];
+
+  const experiences = [
+    { name: "سدايا", logo: sdaiaIcon },
+    { name: "التعاونية", logo: tawuniyaIcon },
+    { name: "جرس", logo: jarasIcon },
+    { name: "جامعة المعرفة", logo: umIcon },
+    { name: "جمعية الاقتصاد", logo: seaIcon },
+    { name: "شركة بيرما", logo: birmaIcon }
   ];
 
   useEffect(() => {
@@ -159,7 +174,7 @@ export default function Home() {
               >
                 <a
                   href="#products"
-                  className="px-8 py-4 bg-emerald-400 text-gray-900 rounded-full hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-400/30 font-medium"
+                  className="px-8 py-4 bg-emerald-400  rounded-full hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-400/30 font-medium"
                 >
                   استكشف منتجاتنا
                 </a>
@@ -467,10 +482,135 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Partners Section - Sleek Grid Layout with Larger Icons */}
+      <section
+        id="partners"
+        className="py-12 md:py-16 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto"
+        >
+          {/* Section Title */}
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">
+            خبرات الفريق
+          </h2>
+
+          {/* Swiper Carousel */}
+          <Swiper
+            modules={[Autoplay, Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={isMobile ? 1 : 4}
+            onSwiper={(swiper) => {
+              // Add mouseenter and mouseleave event listeners
+              swiper.el.addEventListener("mouseenter", () =>
+                swiper.autoplay.stop()
+              );
+              swiper.el.addEventListener("mouseleave", () =>
+                swiper.autoplay.start()
+              );
+            }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            // pagination={{
+            //   clickable: true,
+            //   bulletActiveClass:
+            //     "swiper-pagination-bullet-active bg-emerald-400",
+            // }}
+            // navigation
+            loop={true}
+            className="pb-12 px-4"
+          >
+            {experiences.map((partner, index) => (
+              <SwiperSlide key={index}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{
+                    scale: 1.02,
+                    rotateX: 5,
+                    rotateY: -5,
+                  }}
+                  className="relative bg-gradient-to-br from-gray-800/30 via-gray-900/30 to-gray-800/30 
+                    backdrop-blur-md border border-emerald-400/10 hover:border-emerald-400/30
+                    p-8 md:p-10 rounded-3xl shadow-xl flex items-center justify-center 
+                    transition-all duration-300 min-h-[200px] md:min-h-[220px]
+                    group overflow-hidden isolate"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                  }}
+                >
+                  {/* Ambient Light Effect */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-transparent to-transparent 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"
+                  />
+
+                  {/* Shimmer Effect */}
+                  <div
+                    className="absolute -inset-[500px] group-hover:animate-[spin_8s_linear_infinite] bg-gradient-to-r 
+                    from-transparent via-emerald-400/5 to-transparent rotate-45 -z-10"
+                  />
+
+                  {/* Glass Reflection */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10"
+                  />
+
+                  {/* Partner Logo with 3D Effect */}
+                  <motion.div
+                    whileHover={{ rotateY: 10, z: 20 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    style={{ transformStyle: "preserve-3d" }}
+                    className="relative"
+                  >
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="h-16 md:h-20 w-auto object-contain transition-all duration-300 
+                        group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]"
+                    />
+                  </motion.div>
+
+                  {/* Partner Name with Floating Effect */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-900/95 via-gray-900/70 to-transparent 
+                      backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 
+                      transition-transform duration-500 ease-out"
+                  >
+                    <p
+                      className="text-center text-sm font-medium bg-gradient-to-r from-emerald-400 to-emerald-300 
+                      bg-clip-text text-transparent"
+                    >
+                      {partner.name}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Subtitle */}
+          <div className="text-center mt-8">
+            <p className="text-gray-400 text-lg">
+           
+            </p>
+          </div>
+        </motion.div>
+      </section>
 
       {/* Products Section with Larger Cards */}
       <section id="products" className="py-8 md:py-16 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-emerald-400 mb-8 md:mb-12">
           منتجات بصيرة التحليل
         </h2>
         <motion.div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
