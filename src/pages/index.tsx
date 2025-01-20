@@ -849,9 +849,10 @@ export default function Home() {
       <footer className="bg-gray-900 text-white py-8 md:py-12 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">بصيرة التحليل</h3>
+            <h3 className="text-lg font-bold">    شركة بصيرة التحليل لتقينة المعلومات</h3>
             <p className="text-gray-400">
-              نقود التحول الرقمي من خلال الابتكار والتكنولوجيا المتقدمة
+             
+            رقم السجل التجاري : 1009145111
             </p>
           </div>
 
@@ -873,9 +874,9 @@ export default function Home() {
 
           <div>
             <h4 className="font-bold mb-4">تواصل معنا</h4>
-            <div className="space-y-2 text-gray-400">
+            <div className="space-y-2 text-gray-400  text-center flex flex-col">
               <p>الرياض، المملكة العربية السعودية</p>
-              <p style={{ direction: "ltr", float: "right" }}>+966 568 584 311</p>
+              <p style={{ direction: "ltr" }}>+966 568 584 311</p>
               <p>info@bassiratahlil.com</p>
             </div>
           </div>
