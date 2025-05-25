@@ -13,6 +13,11 @@ import {
   qunatekIcon,
   wslahIcon,
   dblplatIcon,
+  tawuniyaIcon,
+  birmaIcon,
+  sdaiaIcon,
+  seaIcon,
+  jarasIcon,
 } from "../assets";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -961,7 +966,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-brand-white/10 text-center text-brand-white/60">
-            <p>© 2024 كوانتك. جميع الحقوق محفوظة</p>
+            <p>© 2025 كوانتك. جميع الحقوق محفوظة</p>
           </div>
         </div>
       </footer>
