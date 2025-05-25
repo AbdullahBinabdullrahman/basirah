@@ -8,9 +8,17 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["IBM Plex Sans Arabic", "Arial", "Helvetica", "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "brand-cyan": "#00c7ff",
+        "brand-yellow": "#fec32b",
+        "brand-purple": "#ab84f7",
+        "brand-white": "#ffffff",
+        "brand-dark": "#2a393f",
       },
     },
   },

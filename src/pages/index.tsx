@@ -1,34 +1,25 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
-  wslahIcon,
   mesiotIcon,
   hubspotIcon,
-  dblplatIcon,
   asasIcon,
   diarIcon,
   awtadIcon,
   tamtIcon,
   mudptIcon,
-  sdaiaIcon,
-  tawuniyaIcon,
-  jarasIcon,
-  umIcon,
-  seaIcon,
-  birmaIcon
+  qunatekIcon,
+  wslahIcon,
+  dblplatIcon,
 } from "../assets";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
+import { FaWhatsapp } from "react-icons/fa";
 
 // Copy the entire Home component from landing.tsx
 export default function Home() {
   const [isMobile, setIsMobile] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const partners = [
     { name: "خدمات الشرق الاوسط", logo: mesiotIcon },
     { name: "HUBUP", logo: hubspotIcon },
@@ -39,19 +30,16 @@ export default function Home() {
     { name: "مدرب", logo: mudptIcon },
   ];
 
-  const experiences = [
-    { name: "سدايا", logo: sdaiaIcon },
-    { name: "التعاونية", logo: tawuniyaIcon },
-    { name: "جرس", logo: jarasIcon },
-    { name: "جامعة المعرفة", logo: umIcon },
-    { name: "جمعية الاقتصاد", logo: seaIcon },
-    { name: "شركة بيرما", logo: birmaIcon }
-  ];
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+
+    // Check system preference for dark mode
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setIsDarkMode(prefersDark);
 
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -59,101 +47,138 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle("dark");
+  };
+
   return (
     <div
-      className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800"
+      className="relative min-h-screen bg-brand-white dark:bg-brand-dark transition-colors duration-300"
       style={{ direction: "rtl" }}
     >
-      {/* <AnimatedBackground /> */}
+      {/* Theme Toggle Button */}
+      <motion.button
+        onClick={toggleTheme}
+        className="fixed top-4 left-4 z-50 p-2 rounded-full bg-brand-white dark:bg-brand-dark/50 border border-brand-cyan/20 dark:border-brand-cyan/30 shadow-lg"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        {isDarkMode ? "☀️" : "🌙"}
+      </motion.button>
 
-      {/* Header */}
+      {/* Enhanced Background Effects */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-transparent to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,199,255,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(0,199,255,0.15),transparent_50%)]" />
+        {/* Dark theme grid overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,199,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,199,255,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(0,199,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,199,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
+      </div>
+
+      {/* Header with Enhanced Effects */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="p-2 md:p-6 fixed w-full z-50 backdrop-blur-lg bg-gray-900/50 border-b border-emerald-400/20 shadow-lg shadow-emerald-400/10"
+        className="p-2 md:p-6 fixed w-full z-50 backdrop-blur-lg bg-brand-white/70 dark:bg-brand-dark/70 border-b border-brand-cyan/20 dark:border-brand-cyan/30 shadow-lg shadow-brand-cyan/10 dark:shadow-brand-cyan/20 transition-colors duration-300"
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
           <motion.h1
-            className="text-xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent"
+            className="text-xl md:text-3xl font-black bg-gradient-to-r from-brand-cyan to-brand-purple bg-clip-text text-transparent flex flex-col md:flex-row items-center gap-2"
             whileHover={{ scale: isMobile ? 1 : 1.05 }}
             whileTap={{ scale: isMobile ? 0.95 : 1 }}
           >
-            بصيرة التحليل
+            <div className="relative">
+              <div className="absolute inset-0 bg-brand-cyan/20 dark:bg-brand-cyan/30 blur-xl rounded-full" />
+              <Image
+                src={qunatekIcon}
+                alt="logo"
+                width={100}
+                height={100}
+                className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain"
+              />
+            </div>
+            <span className="text-brand-dark dark:text-brand-white relative text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center md:text-right">
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 dark:from-brand-cyan/30 dark:to-brand-purple/30 blur-lg -z-10" />
+              كوانتك
+            </span>
           </motion.h1>
 
-          <nav className="flex space-x-reverse space-x-2 md:space-x-8 text-xs md:text-base">
+          <nav className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-8 text-xs sm:text-sm md:text-base">
             {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map((item) => (
               <motion.a
                 key={item}
-                href={`#${item === "عن الشركة"
-                  ? "about"
-                  : item === "المنتجات"
+                href={`#${
+                  item === "عن الشركة"
+                    ? "about"
+                    : item === "المنتجات"
                     ? "products"
                     : item === "شركاؤنا"
-                      ? "partners"
-                      : "contact"
-                  }`}
-                className="relative px-4 py-2 font-medium text-gray-100"
+                    ? "partners"
+                    : "contact"
+                }`}
+                className="relative px-2 sm:px-4 py-2 font-medium text-brand-dark dark:text-brand-white group text-center md:text-right"
                 whileHover={{ scale: isMobile ? 1 : 1.1 }}
                 whileTap={{ scale: isMobile ? 0.95 : 1 }}
               >
                 <motion.span
-                  className="absolute inset-0 bg-emerald-400/10 rounded-lg -z-10 hidden md:block"
+                  className="absolute inset-0 bg-gradient-to-r from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-lg -z-10 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   layoutId="navbar-hover"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
                 />
-                {item}
+                <span className="relative z-10">{item}</span>
               </motion.a>
             ))}
           </nav>
         </div>
       </motion.header>
 
-      {/* Enhanced Hero Section with More 3D Elements */}
+      {/* Enhanced Hero Section */}
       <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2 pt-20 md:pt-0">
         <motion.div className="absolute inset-0 z-0">
-          {/* 3D Grid Background */}
+          {/* Enhanced 3D Grid Background */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.3 }}
             className="absolute inset-0"
             style={{
-              backgroundImage: `linear-gradient(to right, rgba(52, 211, 153, 0.1) 1px, transparent 1px),
-                                   linear-gradient(to bottom, rgba(52, 211, 153, 0.1) 1px, transparent 1px)`,
+              backgroundImage: `
+                linear-gradient(to right, rgba(0,199,255,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,199,255,0.1) 1px, transparent 1px)
+              `,
               backgroundSize: "50px 50px",
               transform:
                 "perspective(1000px) rotateX(60deg) translateY(-100px)",
             }}
           />
+          {/* Ambient Light Effect */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,199,255,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(0,199,255,0.2),transparent_70%)]" />
         </motion.div>
 
         <motion.div className="relative w-full max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-4 items-center">
-            {/* Enhanced Text Content with New Font Styles */}
-            <motion.div className="space-y-4 md:space-y-6 relative text-center md:text-right">
+            {/* Enhanced Text Content */}
+            <motion.div className="space-y-4 md:space-y-6 relative text-right">
               <motion.h1
-                className="text-4xl md:text-6xl font-bold relative tracking-tight"
-                initial={{ opacity: 0, y: 20 }}
+                className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-brand-cyan drop-shadow-lg relative"
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.7 }}
               >
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 dark:from-brand-cyan/30 dark:to-brand-purple/30 blur-2xl -z-10" />
                 <motion.span
-                  className="block text-5xl md:text-7xl font-extrabold text-emerald-400"
+                  className="block text-4xl sm:text-5xl md:text-7xl font-extrabold text-brand-cyan relative"
                   whileHover={{
                     scale: isMobile ? 1 : 1.05,
-                    x: isMobile ? 10 : 0,
+                    x: isMobile ? -10 : 0,
                   }}
                   transition={{ type: "spring" }}
                 >
                   تحويل
                 </motion.span>
                 <motion.span
-                  className="block bg-gradient-to-r h-20 from-emerald-400 to-emerald-300 bg-clip-text text-transparent font-extrabold"
+                  className="block bg-gradient-to-r from-brand-cyan  to-brand-purple bg-clip-text text-transparent font-extrabold relative pb-10 pt-5"
                   whileHover={{
                     scale: isMobile ? 1 : 1.05,
-                    x: isMobile ? 10 : 0,
+                    x: isMobile ? -10 : 0,
                   }}
                   transition={{ type: "spring" }}
                 >
@@ -161,43 +186,47 @@ export default function Home() {
                 </motion.span>
               </motion.h1>
 
-              <p className="text-xl text-gray-300 leading-relaxed font-light">
+              <p className="text-lg sm:text-xl text-brand-dark dark:text-brand-white leading-relaxed font-light text-right relative   ">
+                <span className="absolute inset-0 bg-gradient-to-r from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 blur-xl -z-10" />
                 نقدم حلولاً مبتكرة تجمع بين التكنولوجيا المتقدمة والذكاء
                 الاصطناعي
-                <span className="text-emerald-400 font-medium"> لتحسين </span>
+                <span className="text-brand-cyan font-medium"> لتحسين </span>
                 تجربة عملائنا
               </p>
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="flex flex-col md:flex-row gap-4 justify-center md:justify-start"
+                className="flex flex-col sm:flex-row gap-4 justify-end"
               >
                 <a
                   href="#products"
-                  className="px-8 py-4 bg-emerald-400  rounded-full hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-400/30 font-medium"
+                  className="relative px-6 sm:px-8 py-3 sm:py-4 bg-brand-yellow text-brand-dark rounded-full hover:bg-brand-yellow/80 transition-all shadow-lg shadow-brand-yellow/30 font-medium text-center group"
                 >
-                  استكشف منتجاتنا
+                  <span className="absolute inset-0 bg-gradient-to-r from-brand-yellow/50 to-brand-yellow/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10">استكشف منتجاتنا</span>
                 </a>
                 <a
                   href="#about"
-                  className="px-8 py-4 border-2 border-emerald-400 text-emerald-400 rounded-full hover:bg-emerald-400/10 transition-all font-medium"
+                  className="relative px-6 sm:px-8 py-3 sm:py-4 border-2 border-brand-cyan text-brand-cyan rounded-full hover:bg-brand-cyan/10 transition-all font-medium text-center group"
                 >
-                  تعرف علينا
+                  <span className="absolute inset-0 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10">تعرف علينا</span>
                 </a>
               </motion.div>
             </motion.div>
 
             {/* Enhanced 3D Elements Group */}
             <motion.div className="relative h-[300px] md:h-[500px] hidden md:flex items-center justify-center">
-              {/* Floating Particles */}
-              {[...Array(5)].map((_, i) => (
+              {/* Enhanced Floating Particles */}
+              {[...Array(8)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-2 h-2 bg-emerald-400/40 rounded-full"
+                  className="absolute w-2 h-2 bg-gradient-to-r from-brand-cyan to-brand-purple rounded-full"
                   animate={{
                     y: [0, -20, 0],
                     x: [0, 10, 0],
                     opacity: [0, 1, 0],
+                    scale: [1, 1.5, 1],
                   }}
                   transition={{
                     duration: 3,
@@ -208,11 +237,12 @@ export default function Home() {
                   style={{
                     left: `${30 + i * 10}%`,
                     top: `${40 + i * 5}%`,
+                    filter: "blur(1px)",
                   }}
                 />
               ))}
 
-              {/* Main 3D Card with Enhanced Effects */}
+              {/* Enhanced Main 3D Card */}
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -226,20 +256,21 @@ export default function Home() {
                 }}
                 className="absolute z-20 w-72 h-72"
               >
-                {/* Card Layers */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-300 rounded-2xl shadow-2xl" />
-                <div className="absolute inset-1 bg-gray-900/90 rounded-xl backdrop-blur-sm" />
+                {/* Enhanced Card Layers */}
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan to-brand-purple rounded-2xl shadow-2xl dark:shadow-brand-cyan/20" />
+                <div className="absolute inset-1 bg-gradient-to-br from-brand-white/95 to-brand-white/90 dark:from-brand-dark/95 dark:to-brand-dark/90 rounded-xl backdrop-blur-sm" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/20 to-brand-purple/20 rounded-2xl blur-xl opacity-50" />
 
-                {/* Interactive Elements */}
+                {/* Enhanced Interactive Elements */}
                 <motion.div
                   className="absolute inset-4 p-6"
                   whileHover={{ scale: 1.02 }}
                 >
-                  {/* Animated Lines */}
+                  {/* Enhanced Animated Lines */}
                   {[...Array(3)].map((_, i) => (
                     <motion.div
                       key={i}
-                      className="h-1 bg-emerald-400/20 rounded-full mb-3"
+                      className="h-1 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 rounded-full mb-3"
                       initial={{ width: "0%" }}
                       animate={{ width: ["0%", "100%", "0%"] }}
                       transition={{
@@ -251,7 +282,7 @@ export default function Home() {
                     />
                   ))}
 
-                  {/* Glowing Orb */}
+                  {/* Enhanced Glowing Orb */}
                   <motion.div
                     animate={{
                       scale: [1, 1.2, 1],
@@ -262,7 +293,7 @@ export default function Home() {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute bottom-6 right-6 w-12 h-12 bg-emerald-400/30 rounded-full"
+                    className="absolute bottom-6 right-6 w-12 h-12 bg-gradient-to-br from-brand-cyan/30 to-brand-purple/30 rounded-full"
                     style={{
                       filter: "blur(8px)",
                     }}
@@ -270,7 +301,7 @@ export default function Home() {
                 </motion.div>
               </motion.div>
 
-              {/* Previous Secondary Elements with Enhanced Animations */}
+              {/* Enhanced Secondary Elements */}
               <motion.div
                 animate={{
                   y: [0, 10, 0],
@@ -282,7 +313,7 @@ export default function Home() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute z-10 w-60 h-60 bg-emerald-300/20 rounded-2xl backdrop-blur-sm"
+                className="absolute z-10 w-60 h-60 bg-gradient-to-br from-brand-purple/20 to-brand-cyan/20 rounded-2xl backdrop-blur-sm"
                 style={{
                   right: "15%",
                   top: "20%",
@@ -291,7 +322,7 @@ export default function Home() {
                 }}
               />
 
-              {/* Decorative Elements */}
+              {/* Enhanced Decorative Elements */}
               <motion.div
                 animate={{
                   scale: [1, 1.1, 1],
@@ -302,23 +333,24 @@ export default function Home() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute z-0 w-40 h-40 bg-emerald-400/10 rounded-full blur-xl"
+                className="absolute z-0 w-40 h-40 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 rounded-full blur-xl"
                 style={{
                   left: "20%",
                   bottom: "20%",
                 }}
               />
 
-              {/* New Connecting Network Lines */}
+              {/* Enhanced Network Lines */}
               <svg className="absolute inset-0 w-full h-full z-10 opacity-20">
                 {[...Array(3)].map((_, i) => (
                   <motion.path
                     key={i}
-                    d={`M ${100 + i * 50} ${100 + i * 30} Q ${200 + i * 20} ${150 + i * 20
-                      }, ${300 + i * 30} ${200 + i * 40}`}
-                    stroke="currentColor"
+                    d={`M ${100 + i * 50} ${100 + i * 30} Q ${200 + i * 20} ${
+                      150 + i * 20
+                    }, ${300 + i * 30} ${200 + i * 40}`}
+                    stroke="url(#gradient)"
                     strokeWidth="2"
-                    className="text-emerald-400"
+                    className="text-brand-cyan"
                     fill="none"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: [0, 1, 0] }}
@@ -330,24 +362,170 @@ export default function Home() {
                     }}
                   />
                 ))}
+                <defs>
+                  <linearGradient
+                    id="gradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
+                  >
+                    <stop offset="0%" stopColor="#00c7ff" />
+                    <stop offset="100%" stopColor="#ab84f7" />
+                  </linearGradient>
+                </defs>
               </svg>
             </motion.div>
           </div>
         </motion.div>
       </div>
 
+      {/* About Section */}
+      <section id="about" className="py-16 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-cyan/5 to-transparent dark:via-brand-cyan/10 -z-10" />
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="bg-brand-white dark:bg-brand-dark/50 p-8 md:p-12 rounded-2xl border border-brand-cyan/20 dark:border-brand-cyan/30 relative group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            <div className="relative z-10">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-cyan drop-shadow-md pb-6 text-right relative"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 dark:from-brand-cyan/30 dark:to-brand-purple/30 blur-xl -z-10" />
+                نحن نبتكر المستقبل
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-lg sm:text-xl text-brand-dark dark:text-brand-white leading-relaxed text-right mb-8"
+              >
+                كوانتك هي شركة تقنية سعودية رائدة تقود ثورة التحول الرقمي في
+                المنطقة. نحن نجمع بين أحدث التقنيات والحلول المبتكرة لخلق مستقبل
+                رقمي أكثر كفاءة وتطوراً. نسعى دائماً لتجاوز حدود الابتكار وإعادة
+                تعريف ما هو ممكن في عالم التكنولوجيا، من خلال تقديم حلول متكاملة
+                تلبي احتياجات عملائنا وتواكب تطلعاتهم المستقبلية.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              >
+                {[
+                  {
+                    title: "رؤيتنا",
+                    description:
+                      "نطمح لأن نكون رواد التحول الرقمي في المنطقة، ونقود ثورة التكنولوجيا نحو مستقبل أكثر تطوراً واستدامة",
+                    icon: "🚀",
+                  },
+                  {
+                    title: "رسالتنا",
+                    description:
+                      "نبتكر حلولاً تقنية متقدمة تلبي احتياجات عملائنا وتدفع عجلة التطور في مختلف القطاعات",
+                    icon: "💫",
+                  },
+                  {
+                    title: "قيمنا",
+                    description:
+                      "الابتكار المستمر، التميز التقني، الشفافية، والشراكة الاستراتيجية لبناء مستقبل رقمي أفضل",
+                    icon: "✨",
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 text-right relative group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <motion.div
+                      className="text-4xl mb-4"
+                      animate={{
+                        y: [0, -5, 0],
+                        rotate: [0, 5, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      {item.icon}
+                    </motion.div>
+                    <h3 className="text-xl font-bold text-brand-cyan mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-brand-dark dark:text-brand-white">
+                      {item.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                {[
+                  {
+                    title: "نقاط قوتنا",
+                    description:
+                      "نتميز بخبرة عميقة في مجال التكنولوجيا، مع فريق من الخبراء المتميزين .",
+                    icon: "💪",
+                  },
+                  {
+                    title: "مستقبلنا",
+                    description:
+                      "نسعى لتوسيع نطاق ابتكاراتنا وتطوير حلول تقنية متقدمة تساهم في بناء مستقبل رقمي متطور ومستدام",
+                    icon: "🔮",
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 text-right relative group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="text-4xl mb-4">{item.icon}</div>
+                    <h3 className="text-xl font-bold text-brand-cyan mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-brand-dark dark:text-brand-white">
+                      {item.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Services & Expertise Section */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-cyan/5 to-transparent dark:via-brand-cyan/10 -z-10" />
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16 text-emerald-400"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-purple drop-shadow-md pb-8 text-right relative"
           >
+            <span className="absolute inset-0 bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 dark:from-brand-purple/30 dark:to-brand-cyan/30 blur-xl -z-10" />
             خدماتنا واختصاصاتنا
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 title: "استشارات تقنية",
@@ -371,17 +549,17 @@ export default function Home() {
                   "أنظمة إدارة المؤسسات",
                 ],
               },
-              //   {
-              //     title: "الذكاء الاصطناعي",
-              //     description:
-              //       "نوظف تقنيات الذكاء الاصطناعي لتحسين العمليات وتقديم حلول مبتكرة",
-              //     icon: "🤖",
-              //     features: [
-              //       "معالجة اللغات الطبيعية",
-              //       "التعلم الآلي",
-              //       "تحليل البيانات المتقدم",
-              //     ],
-              //   },
+              {
+                title: "الذكاء الاصطناعي والوكلاء الذكيون",
+                description:
+                  "نطور حلول ذكاء اصطناعي متقدمة ونبني وكلاء ذكيين لتحسين الأعمال واتخاذ القرار.",
+                icon: "🤖",
+                features: [
+                  "حلول الذكاء الاصطناعي",
+                  "تطوير وكلاء ذكيين",
+                  "تحليل البيانات الذكي",
+                ],
+              },
               {
                 title: "حلول السحابة",
                 description:
@@ -390,7 +568,7 @@ export default function Home() {
                 features: [
                   "هندسة السحابة",
                   "إدارة البنية التحتية",
-                  "التكامل مع الأنظمة المختلفة",
+                  "أمن المعلومات",
                 ],
               },
               {
@@ -414,43 +592,58 @@ export default function Home() {
             ].map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-gray-800/50 p-6 rounded-xl border border-emerald-400/20 hover:border-emerald-400/40 transition-all"
+                className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 hover:border-brand-cyan/40 dark:hover:border-brand-cyan/50 transition-all text-right relative group"
               >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold text-emerald-400 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-300 mb-4">{service.description}</p>
-                <ul className="space-y-2">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-400">
-                      <span className="text-emerald-400 ml-2">•</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10">
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-brand-cyan drop-shadow-sm">
+                    {service.title}
+                  </h3>
+                  <p className="text-brand-dark dark:text-brand-white mb-4">
+                    {service.description}
+                  </p>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center text-brand-dark dark:text-brand-white"
+                      >
+                        <span className="text-brand-cyan ml-2">•</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
             ))}
           </div>
 
           {/* Expertise Stats */}
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-center"
+              className="text-center bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 relative group"
             >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-4xl md:text-5xl font-bold text-emerald-400 mb-2"
-              >
-                15+
-              </motion.div>
-              <div className="text-gray-300">سنوات خبرة</div>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  className="text-4xl md:text-5xl font-bold text-brand-cyan mb-2"
+                >
+                  10+
+                </motion.div>
+                <div className="text-brand-dark dark:text-brand-white">
+                  سنوات خبرة
+                </div>
+              </div>
             </motion.div>
 
             {/* Founding Partners */}
@@ -459,112 +652,180 @@ export default function Home() {
                 name: "عبدالله بن عبدالرحمن",
                 title: "شريك مؤسس",
                 desc: "مهندس برمجيات متميز مع خبرة واسعة في تطوير الحلول التقنية المبتكرة وإنترنت الأشياء وقيادة فرق التطوير. متخصص في تطوير البرمجيات المتقدمة وأنظمة إنترنت الأشياء",
+                icon: "👨‍💻",
               },
               {
                 name: "راكان القريني",
                 title: "شريك مؤسس",
                 desc: "مهندس برمجيات متميز مع خبرة عميقة في تصميم وتطوير البنية التحتية السحابية والأنظمة المتقدمة. متخصص في البنية التحتية السحابية وتطوير البرمجيات",
+                icon: "👨‍💻",
               },
             ].map((founder, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="text-center bg-gray-800/50 p-6 rounded-xl border border-emerald-400/20"
+                className="text-center bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 relative group"
               >
-                <h3 className="text-xl font-bold text-emerald-400 mb-2">
-                  {founder.name}
-                </h3>
-                <div className="text-gray-300 mb-3">{founder.title}</div>
-                <p className="text-gray-400 text-sm">{founder.desc}</p>
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10">
+                  <div className="text-4xl mb-4">{founder.icon}</div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-brand-cyan drop-shadow-sm">
+                    {founder.name}
+                  </h3>
+                  <div className="text-brand-dark dark:text-brand-white mb-3">
+                    {founder.title}
+                  </div>
+                  <p className="text-brand-dark dark:text-brand-white text-sm">
+                    {founder.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-      {/* Partners Section - Sleek Grid Layout with Larger Icons */}
-      <section
-        id="partners"
-        className="py-12 md:py-16 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Title */}
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">
-            خبرات الفريق
-          </h2>
 
-          {/* Swiper Carousel */}
-          <Swiper
-            modules={[Autoplay, Navigation, Pagination]}
-            spaceBetween={30}
-            slidesPerView={isMobile ? 1 : 4}
-            onSwiper={(swiper) => {
-              // Add mouseenter and mouseleave event listeners
-              swiper.el.addEventListener("mouseenter", () =>
-                swiper.autoplay.stop()
-              );
-              swiper.el.addEventListener("mouseleave", () =>
-                swiper.autoplay.start()
-              );
-            }}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            // pagination={{
-            //   clickable: true,
-            //   bulletActiveClass:
-            //     "swiper-pagination-bullet-active bg-emerald-400",
-            // }}
-            // navigation
-            loop={true}
-            className="pb-12 px-4"
+      {/* Products Section with Larger Cards */}
+      <section id="products" className="py-16 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-purple/5 to-transparent dark:via-brand-purple/10 -z-10" />
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-purple drop-shadow-md pb-8 text-right relative"
           >
-            {experiences.map((partner, index) => (
-              <SwiperSlide key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{
-                    scale: 1.02,
-                    rotateX: 5,
-                    rotateY: -5,
-                  }}
-                  className="relative bg-gradient-to-br from-gray-800/30 via-gray-900/30 to-gray-800/30 
-                    backdrop-blur-md border border-emerald-400/10 hover:border-emerald-400/30
-                    p-8 md:p-10 rounded-3xl shadow-xl flex items-center justify-center 
-                    transition-all duration-300 min-h-[200px] md:min-h-[220px]
-                    group overflow-hidden isolate"
-                  style={{
-                    transformStyle: "preserve-3d",
-                    perspective: "1000px",
-                  }}
-                >
-                  {/* Ambient Light Effect */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-transparent to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"
-                  />
+            <span className="absolute inset-0 bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 dark:from-brand-purple/30 dark:to-brand-cyan/30 blur-xl -z-10" />
+            منتجاتنا
+          </motion.h2>
 
-                  {/* Shimmer Effect */}
-                  <div
-                    className="absolute -inset-[500px] group-hover:animate-[spin_8s_linear_infinite] bg-gradient-to-r 
-                    from-transparent via-emerald-400/5 to-transparent rotate-45 -z-10"
-                  />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {[
+              {
+                title: "وصلة",
+                description:
+                  "نظام ذكي لإدارة المباني يوفر التحكم الذكي والمراقبة المتقدمة باستخدام تقنيات إنترنت الأشياء",
+                features: [
+                  "إدارة ذكية للمباني عبر تطبيق موحد",
+                  "تحكم آلي بالأقفال الذكية، الإضاءة، وأجهزة التكييف",
+                  "تحليل متقدم يتيح توقع الصيانة وتقليل التكاليف",
+                  "مراقبة مباشرة واستهلاك طاقة محسّن",
+                  "تكامل سلس مع الأنظمة الأخرى لإدارة المباني",
+                ],
+                icon: wslahIcon,
+                link: "https://wslah.co",
+              },
+              {
+                title: "منصة دبل",
+                description:
+                  "منصة تحليل بيانات متقدمة تساعد الشركات على تحويل البيانات الضخمة إلى رؤى قابلة للتنفيذ باستخدام أدوات ذكاء اصطناعي متطورة",
+                features: [
+                  "تحليل البيانات باستخدام خوارزميات ذكاء اصطناعي متقدمة",
+                  "إعداد تقارير مخصصة لتسهيل اتخاذ القرار",
+                  "لوحات عرض تفاعلية تسلط الضوء على أهم المؤشرات",
+                  "إمكانيات التنبؤ بالبيانات لتوقع المستقبل",
+                  "دعم التكامل مع قواعد البيانات والأنظمة المختلفة",
+                ],
+                icon: dblplatIcon,
+                link: "https://dblplat.co",
+              },
+            ].map((product, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+                className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-purple/20 dark:border-brand-purple/30 hover:border-brand-purple/40 dark:hover:border-purple/50 transition-all text-right relative group cursor-pointer"
+                onClick={() => window.open(product.link, "_blank")}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/5 to-brand-cyan/5 dark:from-brand-purple/10 dark:to-brand-cyan/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-cyan/10 dark:from-brand-purple/20 dark:to-brand-cyan/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className="w-16 h-16 md:w-20 md:h-20 relative"
+                    >
+                      <Image
+                        src={product.icon}
+                        alt={product.title}
+                        className="object-contain"
+                      />
+                    </motion.div>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-brand-purple drop-shadow-sm">
+                      {product.title}
+                    </h3>
+                  </div>
+                  <p className="text-brand-dark dark:text-brand-white mb-4">
+                    {product.description}
+                  </p>
+                  <ul className="space-y-2">
+                    {product.features.map((feature, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center text-brand-dark dark:text-brand-white"
+                      >
+                        <span className="text-brand-purple ml-2">•</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="absolute bottom-6 left-6 text-brand-purple">
+                    <motion.svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 transform rotate-180"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      animate={{ x: [0, -5, 0] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                      }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </motion.svg>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                  {/* Glass Reflection */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10"
-                  />
+      {/* Partners Section - Sleek Grid Layout with Larger Icons */}
+      <section id="partners" className="py-16 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-yellow/5 to-transparent dark:via-brand-yellow/10 -z-10" />
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-yellow drop-shadow-md pb-8 text-right relative"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-brand-yellow/20 to-brand-cyan/20 dark:from-brand-yellow/30 dark:to-brand-cyan/30 blur-xl -z-10" />
+            شركاؤنا
+          </motion.h2>
 
-                  {/* Partner Logo with 3D Effect */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            {partners.map((partner, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-yellow/20 dark:border-brand-yellow/30 hover:border-brand-yellow/40 dark:hover:border-brand-yellow/50 transition-all text-center relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/5 to-brand-cyan/5 dark:from-brand-yellow/10 dark:to-brand-cyan/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/10 to-brand-cyan/10 dark:from-brand-yellow/20 dark:to-brand-cyan/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10">
                   <motion.div
                     whileHover={{ rotateY: 10, z: 20 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -574,330 +835,134 @@ export default function Home() {
                     <Image
                       src={partner.logo}
                       alt={partner.name}
-                      className="h-16 md:h-20 w-auto object-contain transition-all duration-300 
-                        group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]"
+                      className="h-20 md:h-24 w-auto object-contain mb-4"
                     />
                   </motion.div>
-
-                  {/* Partner Name with Floating Effect */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                    className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-900/95 via-gray-900/70 to-transparent 
-                      backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 
-                      transition-transform duration-500 ease-out"
-                  >
-                    <p
-                      className="text-center text-sm font-medium bg-gradient-to-r from-emerald-400 to-emerald-300 
-                      bg-clip-text text-transparent"
-                    >
-                      {partner.name}
-                    </p>
-                  </motion.div>
-                </motion.div>
-              </SwiperSlide>
+                  <div className="mt-2 text-center font-bold text-brand-dark dark:text-brand-white text-base md:text-lg">
+                    {partner.name}
+                  </div>
+                </div>
+              </motion.div>
             ))}
-          </Swiper>
-
-          {/* Subtitle */}
-          <div className="text-center mt-8">
-            <p className="text-gray-400 text-lg">
-           
-            </p>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* Products Section with Larger Cards */}
-      <section id="products" className="py-8 md:py-16 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-emerald-400 mb-8 md:mb-12">
-          منتجات بصيرة التحليل
-        </h2>
-        <motion.div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {[
-            {
-              title: "وصلة",
-              desc: "نظام ذكي لإدارة المباني يوفر التحكم الذكي والمراقبة المتقدمة باستخدام تقنيات إنترنت الأشياء.",
-              features: [
-                "إدارة ذكية للمباني عبر تطبيق موحد.",
-                "تحكم آلي بالأقفال الذكية، الإضاءة، وأجهزة التكييف.",
-                "تحليل متقدم يتيح توقع الصيانة وتقليل التكاليف.",
-                "مراقبة مباشرة واستهلاك طاقة محسّن.",
-                "تكامل سلس مع الأنظمة الأخرى لإدارة المباني.",
-              ],
-              gradient: "from-emerald-400 to-emerald-300",
-              link: "https://wslah.co",
-              icon: wslahIcon,
-            },
-            {
-              title: "منصة دبل",
-              desc: "صُممت منصتنا لتزويدك بالأدوات الذكية والفعالة التي تساعدك في تحليل الأسواق وفهم الفرص الواعدة. نعتمد على تقنيات الذكاء الاصطناعي وبيوت الخبرة لتحليل القوائم المالية للشركات وإجراء التحليلات الفنية",
-              features: [
-                " أدوات لتحليل السوق",
-                "أكثر من مئات الفرصة استثمارية يومياً",
-                " تنبيهات فورية للفرص الاستثمارية",
-                "تحليل الأسهم والعملات",
-                "تحليل القطاعات والأسهم القيادية",
-              ],
-              gradient: "from-emerald-300 to-emerald-400",
-              link: "https://dblplat.co",
-              icon: dblplatIcon,
-            },
-          ].map((product, index) => (
+      {/* Enhanced Contact Section */}
+      {/* <section id="contact" className="py-16 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-cyan/5 to-transparent dark:via-brand-cyan/10 -z-10" />
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-cyan drop-shadow-md pb-8 text-right relative"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 dark:from-brand-cyan/30 dark:to-brand-purple/30 blur-xl -z-10" />
+            اتصل بنا
+          </motion.h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{
-                scale: isMobile ? 1 : 1.02,
-                rotateX: isMobile ? 0 : 5,
-                rotateY: isMobile ? 0 : -5,
-              }}
-              className="relative group cursor-pointer"
-              onClick={() => window.open(product.link, "_blank")}
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-brand-white dark:bg-brand-dark/50 p-6 rounded-xl border border-brand-cyan/20 dark:border-brand-cyan/30 text-right relative group"
             >
-              <div
-                className="relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-emerald-400/10 to-emerald-600/5
-                backdrop-blur-sm border border-emerald-400/20 hover:border-emerald-400/40
-                transition-all duration-300 h-full"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-emerald-400">
-                    {product.title}
-                  </h3>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    className="w-16 h-16 md:w-20 md:h-20 relative"
-                  >
-                    <Image
-                      src={product.icon}
-                      alt={product.title}
-                      layout="fill"
-                      className="object-contain"
-                    />
-                  </motion.div>
-                </div>
-
-                <p className="text-lg text-gray-300 mb-6">{product.desc}</p>
-
-                <ul className="space-y-3">
-                  {product.features.map((feature, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-2 text-gray-400"
-                    >
-                      <span className="text-emerald-400">•</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="absolute bottom-6 right-6 text-emerald-400">
-                  <motion.svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                    }}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </motion.svg>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-purple/5 dark:from-brand-cyan/10 dark:to-brand-purple/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-purple/10 dark:from-brand-cyan/20 dark:to-brand-purple/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-brand-cyan mb-4">
+                  معلومات الاتصال
+                </h3>
+                <div className="space-y-4">
+                  <p className="flex items-center text-brand-dark dark:text-brand-white">
+                    <span className="text-brand-cyan ml-2">📍</span>
+                    العنوان: الرياض، المملكة العربية السعودية
+                  </p>
+                  <p className="flex items-center text-brand-dark dark:text-brand-white">
+                    <span className="text-brand-cyan ml-2">📞</span>
+                    966 56 672 3503
+                  </p>
+                  <p className="flex items-center text-brand-dark dark:text-brand-white">
+                    <span className="text-brand-cyan ml-2">✉️</span>
+                    البريد الإلكتروني: info@qunatek.com
+                  </p>
                 </div>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* Partners Section - Sleek Grid Layout with Larger Icons */}
-      <section
-        id="partners"
-        className="py-12 md:py-16 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Title */}
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">
-            عملاؤنا
-          </h2>
-
-          {/* Swiper Carousel */}
-          <Swiper
-            modules={[Autoplay, Navigation, Pagination]}
-            spaceBetween={30}
-            slidesPerView={isMobile ? 1 : 4}
-            onSwiper={(swiper) => {
-              // Add mouseenter and mouseleave event listeners
-              swiper.el.addEventListener("mouseenter", () =>
-                swiper.autoplay.stop()
-              );
-              swiper.el.addEventListener("mouseleave", () =>
-                swiper.autoplay.start()
-              );
-            }}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            // pagination={{
-            //   clickable: true,
-            //   bulletActiveClass:
-            //     "swiper-pagination-bullet-active bg-emerald-400",
-            // }}
-            // navigation
-            loop={true}
-            className="pb-12 px-4"
-          >
-            {partners.map((partner, index) => (
-              <SwiperSlide key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{
-                    scale: 1.02,
-                    rotateX: 5,
-                    rotateY: -5,
-                  }}
-                  className="relative bg-gradient-to-br from-gray-800/30 via-gray-900/30 to-gray-800/30 
-                    backdrop-blur-md border border-emerald-400/10 hover:border-emerald-400/30
-                    p-8 md:p-10 rounded-3xl shadow-xl flex items-center justify-center 
-                    transition-all duration-300 min-h-[200px] md:min-h-[220px]
-                    group overflow-hidden isolate"
-                  style={{
-                    transformStyle: "preserve-3d",
-                    perspective: "1000px",
-                  }}
-                >
-                  {/* Ambient Light Effect */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-transparent to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"
-                  />
-
-                  {/* Shimmer Effect */}
-                  <div
-                    className="absolute -inset-[500px] group-hover:animate-[spin_8s_linear_infinite] bg-gradient-to-r 
-                    from-transparent via-emerald-400/5 to-transparent rotate-45 -z-10"
-                  />
-
-                  {/* Glass Reflection */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10"
-                  />
-
-                  {/* Partner Logo with 3D Effect */}
-                  <motion.div
-                    whileHover={{ rotateY: 10, z: 20 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    style={{ transformStyle: "preserve-3d" }}
-                    className="relative"
-                  >
-                    <Image
-                      src={partner.logo}
-                      alt={partner.name}
-                      className="h-16 md:h-20 w-auto object-contain transition-all duration-300 
-                        group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]"
-                    />
-                  </motion.div>
-
-                  {/* Partner Name with Floating Effect */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                    className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-900/95 via-gray-900/70 to-transparent 
-                      backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 
-                      transition-transform duration-500 ease-out"
-                  >
-                    <p
-                      className="text-center text-sm font-medium bg-gradient-to-r from-emerald-400 to-emerald-300 
-                      bg-clip-text text-transparent"
-                    >
-                      {partner.name}
-                    </p>
-                  </motion.div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          {/* Subtitle */}
-          <div className="text-center mt-8">
-            <p className="text-gray-400 text-lg">
-              نحن فخورون بالثقة التي منحنا إياها شركاؤنا من مختلف القطاعات.
-            </p>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 md:py-12 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">    شركة بصيرة التحليل لتقينة المعلومات</h3>
-            <p className="text-gray-400">
-             
-            رقم السجل التجاري : 1009145111
-            </p>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-4">روابط سريعة</h4>
-            <ul className="space-y-2">
-              {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item}`}
-                    className="text-gray-400 hover:text-white"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-4">تواصل معنا</h4>
-            <div className="space-y-2 text-gray-400  text-center flex flex-col">
-              <p>الرياض، المملكة العربية السعودية</p>
-              <p style={{ direction: "ltr" }}>+966 568 584 311</p>
-              <p>info@bassiratahlil.com</p>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-4">تابعنا</h4>
-            <div className="flex space-x-4">
-              {["twitter", "linkedin", "facebook"].map((social) => (
-                <a
-                  key={social}
-                  href={`https://${social}.com/baseerah`}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <i className={`fab fa-${social} text-2xl`}></i>
-                </a>
-              ))}
-            </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-emerald-400/20 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} بصيرة التحليل. جميع الحقوق محفوظة</p>
+      </section> */}
+
+      {/* Enhanced Footer */}
+      <footer className="py-8 px-4 bg-brand-dark text-brand-white relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-cyan/5 to-transparent dark:via-brand-cyan/10 -z-10" />
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-right">
+              <h3 className="text-xl font-bold mb-4">كوانتك</h3>
+              <p className="text-brand-white/80">
+                نحن نقدم حلولاً مبتكرة تجمع بين التكنولوجيا المتقدمة والذكاء
+                الاصطناعي لتحسين تجربة عملائنا
+              </p>
+            </div>
+            <div className="text-right">
+              <h3 className="text-xl font-bold mb-4">روابط سريعة</h3>
+              <ul className="space-y-2">
+                {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map(
+                  (item) => (
+                    <li key={item}>
+                      <a
+                        href={`#${
+                          item === "عن الشركة"
+                            ? "about"
+                            : item === "المنتجات"
+                            ? "products"
+                            : item === "شركاؤنا"
+                            ? "partners"
+                            : "contact"
+                        }`}
+                        className="text-brand-white/80 hover:text-brand-cyan transition-colors"
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+            <div className="text-right">
+              <h3 className="text-xl font-bold mb-4">تواصل معنا</h3>
+              <div
+                className="flex space-x-4 rtl:space-x-reverse justify-end flex-col gap-2"
+                style={{ direction: "ltr" }}
+              >
+                {/* add whatsup icon  */}
+                {[
+                  {
+                    icon: <FaWhatsapp />,
+                    label: "واتساب",
+                    value: "966 56 672 3503",
+                  },
+                  {
+                    icon: "📧",
+                    label: "بريد إلكتروني",
+                    value: "info@qunatek.io",
+                  },
+                  { icon: "📞", label: "هاتف", value: "966 56 672 3503" },
+                ].map((social) => (
+                  <div key={social.label}>
+                    <div className="flex justify-end items-center gap-4">
+                      <span>{social.value}</span>
+                      {social.icon}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-brand-white/10 text-center text-brand-white/60">
+            <p>© 2024 كوانتك. جميع الحقوق محفوظة</p>
+          </div>
         </div>
       </footer>
     </div>
