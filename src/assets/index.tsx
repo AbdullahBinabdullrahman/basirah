@@ -30,6 +30,6 @@ export {
   tawuniyaIcon,
   birmaIcon,
   sdaiaIcon,
-  umIcon
-  qunatekIcon,
+  umIcon,
+  qunatekIcon
 };

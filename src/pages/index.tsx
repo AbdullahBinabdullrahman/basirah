@@ -12,12 +12,7 @@ import {
   mudptIcon,
   qunatekIcon,
   wslahIcon,
-  dblplatIcon,
-  tawuniyaIcon,
-  birmaIcon,
-  sdaiaIcon,
-  seaIcon,
-  jarasIcon,
+  dblplatIcon
 } from "../assets";
 import { FaWhatsapp } from "react-icons/fa";
 
