@@ -79,7 +79,7 @@ export default function Home() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="p-2 md:p-6 fixed w-full z-50 backdrop-blur-lg bg-brand-white/70 dark:bg-brand-dark/70 border-b border-brand-cyan/20 dark:border-brand-cyan/30 shadow-lg shadow-brand-cyan/10 dark:shadow-brand-cyan/20 transition-colors duration-300"
+        className="p-2 md:p-6 backdrop-blur-lg bg-brand-white/70 dark:bg-brand-dark/70 border-b border-brand-cyan/20 dark:border-brand-cyan/30 shadow-lg shadow-brand-cyan/10 dark:shadow-brand-cyan/20 transition-colors duration-300"
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
           <motion.h1
@@ -103,7 +103,7 @@ export default function Home() {
             </span>
           </motion.h1>
 
-          <nav className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-8 text-xs sm:text-sm md:text-base">
+          <nav className="grid grid-cols-4 md:grid-cols-4 gap-2 md:gap-8 text-xs sm:text-sm md:text-base">
             {["عن الشركة", "المنتجات", "شركاؤنا", "اتصل بنا"].map((item) => (
               <motion.a
                 key={item}
@@ -132,7 +132,7 @@ export default function Home() {
       </motion.header>
 
       {/* Enhanced Hero Section */}
-      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2 pt-20 md:pt-0">
+      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 md:px-0 md:py-2">
         <motion.div className="absolute inset-0 z-0">
           {/* Enhanced 3D Grid Background */}
           <motion.div
